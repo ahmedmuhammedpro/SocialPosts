@@ -3,7 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ahmedpro/AndroidStudioProjects/SocialPosts/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahmedpro/AndroidStudioProjects/SocialPosts/app/src/main/res/drawable/gray_ripple.xml" value="0.2703125" />
+        <entry key="..\:/Users/ahmedpro/AndroidStudioProjects/SocialPosts/app/src/main/res/drawable/ic_general_error.xml" value="0.2703125" />
+        <entry key="..\:/Users/ahmedpro/AndroidStudioProjects/SocialPosts/app/src/main/res/drawable/search_button_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/ahmedpro/AndroidStudioProjects/SocialPosts/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/ahmedpro/AndroidStudioProjects/SocialPosts/app/src/main/res/layout/fragment_post_details.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahmedpro/AndroidStudioProjects/SocialPosts/app/src/main/res/layout/fragment_posts_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahmedpro/AndroidStudioProjects/SocialPosts/app/src/main/res/layout/ic_view_details_arrow.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahmedpro/AndroidStudioProjects/SocialPosts/app/src/main/res/layout/loading.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/ahmedpro/AndroidStudioProjects/SocialPosts/app/src/main/res/layout/post_item.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

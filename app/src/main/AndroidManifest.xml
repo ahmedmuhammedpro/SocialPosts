@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.khair.socialposts">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".PostsListApp"
         android:allowBackup="true"
