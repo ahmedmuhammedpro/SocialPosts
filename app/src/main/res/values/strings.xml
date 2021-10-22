@@ -2,4 +2,7 @@
     <string name="app_name">Social Posts</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="social_posts">Social Posts</string>
+    <string name="general_error">Sorry!! something went wrong</string>
+    <string name="try_again">try again</string>
 </resources>
