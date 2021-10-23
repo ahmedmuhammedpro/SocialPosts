@@ -18,6 +18,9 @@ class PostsAdapter(
             .inflate(R.layout.post_item, parent, false)
 
         val holder = PostViewHolder(view)
+        view.setOnClickListener {
+            onItemClickListener.onItemClick(view, posts[holder.adapterPosition])
+        }
         holder.viewMore.setOnClickListener {
             onItemClickListener.onItemClick(view, posts[holder.adapterPosition])
         }
@@ -27,6 +30,7 @@ class PostsAdapter(
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.postTitleTV.text = posts[position].title
+        holder.postBodyTv.text = posts[position].body
     }
 
     override fun getItemCount(): Int {
@@ -35,6 +39,7 @@ class PostsAdapter(
 
     class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val postTitleTV: TextView = view.findViewById(R.id.post_title_tv)
+        val postBodyTv: TextView = view.findViewById(R.id.post_body_tv)
         val viewMore: ImageView = view.findViewById(R.id.post_view_more)
     }
 

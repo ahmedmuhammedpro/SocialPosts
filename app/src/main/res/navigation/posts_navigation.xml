@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/postsListFragment"
         android:name="com.khair.socialposts.postslist.PostsListFragment"
-        android:label="fragment_posts_list"
+        android:label="Posts"
         tools:layout="@layout/fragment_posts_list" >
         <action
             android:id="@+id/action_postsListFragment_to_postDetailsFragment"
@@ -18,6 +18,10 @@
     <fragment
         android:id="@+id/postDetailsFragment"
         android:name="com.khair.socialposts.postdetails.PostDetailsFragment"
-        android:label="fragment_post_details"
-        tools:layout="@layout/fragment_post_details" />
+        android:label="Post Details"
+        tools:layout="@layout/fragment_post_details" >
+        <action
+            android:id="@+id/action_postDetailsFragment_to_postsListFragment"
+            app:destination="@id/postsListFragment" />
+    </fragment>
 </navigation>
