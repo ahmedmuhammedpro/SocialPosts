@@ -42,16 +42,14 @@ class PostsListFragment : Fragment(), PostsAdapter.OnItemClickListener {
         if (mRootView == null) {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_posts_list, container, false)
             postsViewModel = ViewModelProvider(
-                requireActivity(),
+                this,
                 PostsViewModelFactory(postsRepository)
             ).get(PostsViewModel::class.java)
-
+            setupViewsListener()
+            setupRequestsListener()
             binding.postsRv.layoutManager = LinearLayoutManager(context)
             binding.postsRv.adapter = postsAdapter
             postsViewModel.getCachedPosts()
-            setupRequestsListener()
-            setupViewsListener()
-
             mRootView = binding.root
         }
 
@@ -91,7 +89,7 @@ class PostsListFragment : Fragment(), PostsAdapter.OnItemClickListener {
     @SuppressLint("NotifyDataSetChanged")
     private fun setupRequestsListener() {
 
-        postsViewModel.cachedPostsLiveDate.observe(viewLifecycleOwner) {
+        postsViewModel.cachedPostsLiveDate.observe(requireActivity()) {
             if (!it.isNullOrEmpty()) {
                 cachedPosts = it
                 binding.postsContentContainer.visibility = View.VISIBLE
@@ -103,7 +101,7 @@ class PostsListFragment : Fragment(), PostsAdapter.OnItemClickListener {
             postsViewModel.getFirstPosts()
         }
 
-        postsViewModel.firstPostsLiveDate.observe(viewLifecycleOwner) {
+        postsViewModel.firstPostsLiveDate.observe(requireActivity()) {
             if (!it.isNullOrEmpty()) {
                 binding.postsContentContainer.visibility = View.VISIBLE
                 postsAdapter.posts.clear()
@@ -118,7 +116,7 @@ class PostsListFragment : Fragment(), PostsAdapter.OnItemClickListener {
             }
         }
 
-        postsViewModel.morePostsLiveDate.observe(viewLifecycleOwner) {
+        postsViewModel.morePostsLiveDate.observe(requireActivity()) {
             if (!it.isNullOrEmpty()) {
                 postsAdapter.posts.addAll(it)
                 postsAdapter.notifyItemRangeChanged(postsAdapter.itemCount, it.size + 1)
@@ -129,7 +127,7 @@ class PostsListFragment : Fragment(), PostsAdapter.OnItemClickListener {
             binding.loadMore.visibility = View.GONE
         }
 
-        postsViewModel.loadingLiveData.observe(viewLifecycleOwner) {
+        postsViewModel.loadingLiveData.observe(requireActivity()) {
             if (it) {
                 if (cachedPosts.isNullOrEmpty()) {
                     binding.loadingViewContainer.visibility = View.VISIBLE
