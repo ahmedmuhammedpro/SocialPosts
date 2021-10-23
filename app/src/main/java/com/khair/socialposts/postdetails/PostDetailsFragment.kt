@@ -5,55 +5,86 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.khair.socialposts.R
+import com.khair.socialposts.databinding.FragmentPostDetailsBinding
+import com.khair.socialposts_model.PostDetailsRepository
+import com.khair.socialposts_model.PostDetailsRepositoryImp
+import com.khair.socialposts_model.entities.Post
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PostDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PostDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var binding: FragmentPostDetailsBinding
+    private lateinit var postDetailsViewModel: PostDetailsViewModel
+    private var post: Post? = null
+    private val postDetailsRepository: PostDetailsRepository by lazy {
+        PostDetailsRepositoryImp()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            post = it.getParcelable(POST_ITEM_KEY)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_post_details, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_post_details,
+            container,
+            false
+        )
+        postDetailsViewModel = ViewModelProvider(
+            this, PostDetailsViewModelFactory(postDetailsRepository)
+        ).get(PostDetailsViewModel::class.java)
+
+        post?.let {
+            postDetailsViewModel.getUserAndComments(it)
+        }
+
+        setupRequestsListener()
+
+        return binding.root
+    }
+
+    private fun setupRequestsListener() {
+        postDetailsViewModel.loadingLiveData.observe(viewLifecycleOwner) {
+            binding.loadingViewContainer.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        postDetailsViewModel.userAndCommentsLiveData.observe(viewLifecycleOwner) {
+            val user = it.first
+            val comments = it.second
+            binding.post = post
+            binding.userName = user.name
+            binding.numOfComments = comments.size
+            binding.commentsRv.layoutManager = LinearLayoutManager(requireContext())
+            binding.commentsRv.adapter = PostCommentsAdapter(comments)
+
+            binding.postDetailsContainer.visibility = View.VISIBLE
+        }
+
+        postDetailsViewModel.failingLiveData.observe(viewLifecycleOwner) {
+            if (it) {
+                Snackbar.make(binding.root, getString(R.string.general_error), Snackbar.LENGTH_LONG).show()
+            }
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PostDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
+
+        const val POST_ITEM_KEY = "POST_ITEM"
+
         fun newInstance(param1: String, param2: String) =
             PostDetailsFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }

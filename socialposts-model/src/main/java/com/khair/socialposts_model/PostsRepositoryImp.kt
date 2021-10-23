@@ -10,14 +10,10 @@ class PostsRepositoryImp(private val postsDao: PostsDao) : PostsRepository {
         PostsApi.getPostsApi()
     }
 
-    override suspend fun getAllPostsRemote(): Result<List<Post>?> {
+    override suspend fun getAllPostsRemote(userId: Int): Result<List<Post>?> {
         return try {
-            val posts = postsApi.getAllPosts()
-            if (!posts.isNullOrEmpty()) {
-                Result.success(posts)
-            } else {
-                Result.failure(Exception("Null or Empty posts"))
-            }
+            val posts = postsApi.getAllPosts(userId)
+            Result.success(posts)
         } catch (ex: Throwable) {
             Result.failure(ex)
         }
