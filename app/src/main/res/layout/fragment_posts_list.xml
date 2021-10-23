@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/main_background"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
 
@@ -13,8 +15,7 @@
             android:id="@+id/posts_content_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/main_background"
-            android:visibility="gone"
+            android:visibility="visible"
             tools:context=".postslist.PostsListFragment">
 
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -32,6 +33,16 @@
                     tools:listitem="@layout/post_item" />
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <ProgressBar
+                android:id="@+id/load_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_background"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/refresh"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

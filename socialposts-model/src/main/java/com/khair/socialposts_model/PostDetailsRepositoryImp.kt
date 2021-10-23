@@ -10,7 +10,7 @@ class PostDetailsRepositoryImp : PostDetailsRepository {
         PostsApi.getPostsApi()
     }
 
-    override suspend fun getCommentsByPostId(postId: Int): Result<List<Comment>?> {
+    override suspend fun getCommentsByPostId(postId: Int): Result<List<Comment>> {
         return try {
             val comments = postsApi.getPostComments(postId)
             if (!comments.isNullOrEmpty()) {
@@ -23,7 +23,7 @@ class PostDetailsRepositoryImp : PostDetailsRepository {
         }
     }
 
-    override suspend fun userById(userId: Int): Result<User?> {
+    override suspend fun getUserById(userId: Int): Result<User> {
         return try {
             val user = postsApi.getUser(userId)
             if (user != null) {
